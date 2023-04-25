@@ -1,0 +1,21 @@
+{
+  "name": "galaxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "ARS",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.151.3"
+  },
+  "devDependencies": {
+    "vite": "^4.3.1"
+  }
+}
