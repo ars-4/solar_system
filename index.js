@@ -13,6 +13,7 @@ import earth_texture from './assets/textures/earth.png';
 import mars_texture from './assets/textures/mars.jpg';
 import jupyter_texture from './assets/textures/jupiter.jpg';
 import saturn_texture from './assets/textures/saturn.jpg';
+import saturn_ring_texture from './assets/textures/saturn_ring.png';
 import uranus_texture from './assets/textures/uranus.jpg';
 import neptune_texture from './assets/textures/neptune.jpg';
 
@@ -35,10 +36,15 @@ camera.position.z = 5;
 
 
 // Lights
-const directionalLight_left = new THREE.DirectionalLight(0xffffff, 5);
-directionalLight_left.position.set(0.01, 0, 0);
-directionalLight_left.scale.set(0.2, 0.2, 0.2);
-scene.add(directionalLight_left);
+
+const sun_light = new THREE.PointLight(0xffffff, 5);
+sun_light.position.set(0, 0, 0);
+sun_light.scale.set(0.2, 0.2, 0.2);
+scene.add(sun_light);
+// const directionalLight_left = new THREE.DirectionalLight(0xffffff, 5);
+// directionalLight_left.position.set(0.01, 0, 0);
+// directionalLight_left.scale.set(0.2, 0.2, 0.2);
+// scene.add(directionalLight_left);
 
 // const directionalLight_right = new THREE.DirectionalLight(0xf44336, 9);
 // directionalLight_right.position.set(-0.01, 0, 0);
@@ -109,6 +115,7 @@ scene.add(planet_three);
 const planet_four_geometry = new THREE.SphereGeometry(0.1, 32, 32);
 const planet_four_material = new THREE.MeshStandardMaterial({ map: textureLoader.load(jupyter_texture) });
 const planet_four = new THREE.Mesh(planet_four_geometry, planet_four_material);
+planet_four.scale.set(2.5, 2, 2);
 planet_four.position.z = 2.5;
 scene.add(planet_four);
 
@@ -118,6 +125,12 @@ const planet_five_material = new THREE.MeshStandardMaterial({ map: textureLoader
 const planet_five = new THREE.Mesh(planet_five_geometry, planet_five_material);
 planet_five.position.z = 2.5;
 scene.add(planet_five);
+// Saturn: planet_five_ring
+const planet_five_ring_geometry = new THREE.RingGeometry(0.15, 0.2, 32);
+const planet_five_ring_material = new THREE.MeshStandardMaterial({ map: textureLoader.load(saturn_ring_texture), side: THREE.DoubleSide });
+const planet_five_ring = new THREE.Mesh(planet_five_ring_geometry, planet_five_ring_material);
+planet_five_ring.position.z = 2.5;
+scene.add(planet_five_ring);
 
 // Uranus: planet_six
 const planet_six_geometry = new THREE.SphereGeometry(0.1, 32, 32);
@@ -139,11 +152,11 @@ scene.add(planet_seven);
 // Rendering
 // renderer.render(scene, camera);
 function planets_animation (time) {
-    planet_zero.rotation.y += 0.01;
+    planet_zero.rotation.y += 0.09;
     planet_zero.position.set(1.5 * Math.sin(time / 1000), 0, 1.5 * Math.cos(time / 1000));
-    planet_one.rotation.y += 0.01;
+    planet_one.rotation.y += 0.08;
     planet_one.position.set(2 * Math.sin(time / 1500), 0, 2 * Math.cos(time / 1500));
-    planet_two.rotation.y += 0.01;
+    planet_two.rotation.y += 0.015;
     planet_two.position.set(2.5 * Math.sin(time / 2000), 0, 2.5 * Math.cos(time / 2000));
     planet_three.rotation.y += 0.01;
     planet_three.position.set(3 * Math.sin(time / 2500), 0, 3 * Math.cos(time / 2500));
@@ -151,6 +164,8 @@ function planets_animation (time) {
     planet_four.position.set(3.5 * Math.sin(time / 3000), 0, 3.5 * Math.cos(time / 3000));
     planet_five.rotation.y += 0.01;
     planet_five.position.set(4 * Math.sin(time / 3500), 0, 4 * Math.cos(time / 3500));
+    planet_five_ring.rotation.y += 0.01;
+    planet_five_ring.position.set(4 * Math.sin(time / 3500), 0, 4 * Math.cos(time / 3500));
     planet_six.rotation.y += 0.01;
     planet_six.position.set(4.5 * Math.sin(time / 4000), 0, 4.5 * Math.cos(time / 4000));
     planet_seven.rotation.y += 0.01;
@@ -162,7 +177,7 @@ function planets_animation (time) {
 function animate(time) {
     // requestAnimationFrame(animate);
     sun.rotation.y += 0.01;
-    directionalLight_left.position.set(1.5 * Math.sin(time / 1000), 0, 1.5 * Math.cos(time / 1000));
+    // directionalLight_left.position.set(1.5 * Math.sin(time / 1000), 0, 1.5 * Math.cos(time / 1000));
     planets_animation(time);
     renderer.render(scene, camera);
     controls.update();
